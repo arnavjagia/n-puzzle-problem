@@ -23,5 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# python virtual environment
+# Python cache
+__pycache__
+*.pyc
+
+# Python virtual environment
 puzzlevenv
