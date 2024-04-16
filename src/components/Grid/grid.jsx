@@ -72,7 +72,7 @@ function Grid() {
       <input
         type="range"
         min="2"
-        max="5"
+        max="4"
         value={gridSize}
         onChange={handleSliderChange}
       />
