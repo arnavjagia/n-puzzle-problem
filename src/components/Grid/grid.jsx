@@ -4,6 +4,7 @@ import "./grid.css";
 function Grid() {
   const [gridSize, setGridSize] = useState(3); // Initial grid size, e.g., 3x3 grid
   const [gridCells, setGridCells] = useState(generateGridCells(gridSize));
+  const [oldGridCells, setOldGridCells] = useState(generateGridCells(gridSize));
 
   // Function to generate initial grid cells
   function generateGridCells(size) {
@@ -24,6 +25,7 @@ function Grid() {
         newGridCells[clickedIndex],
         newGridCells[emptyIndex],
       ];
+      setOldGridCells(gridCells);
       setGridCells(newGridCells);
     }
   };
@@ -61,10 +63,14 @@ function Grid() {
     const newSize = parseInt(event.target.value, 10);
     setGridSize(newSize);
     setGridCells(generateGridCells(newSize));
+    setOldGridCells(generateGridCells(newSize));
   };
 
   // Calculate grid template columns dynamically based on gridSize
   const gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+
+  // Check if oldGridCells and gridCells have the same values
+  const areArraysEqual = JSON.stringify(oldGridCells) === JSON.stringify(gridCells);
 
   return (
     <div className="grid-container">
@@ -89,6 +95,9 @@ function Grid() {
       >
         {renderGrid()}
       </div>
+      <p>Parent: {oldGridCells}</p>
+      <p>New: {gridCells}</p>
+      <p>Are oldGridCells and gridCells the same? {areArraysEqual ? "Yes" : "No"}</p>
     </div>
   );
 }
