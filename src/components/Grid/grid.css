@@ -1,7 +1,25 @@
-wrapper {
+.grid-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  gap: 5px;
+}
+
+.grid-cell {
   display: flex;
-  flex-direction: row;
-  gap: 1em;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: lightblue;
+  border: 1px solid #ccc;
+  height: 50px;
+  font-size: 1.5rem;
+}
+
+.empty-cell {
+  background-color: #fff; /* White background for the empty cell */
+  cursor: pointer; /* Show cursor pointer for clickable empty cell */
 }
