@@ -17,21 +17,6 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-todos = [
-    {
-        "id": "1",
-        "item": "Read a book."
-    },
-    {
-        "id": "2",
-        "item": "Cycle around town."
-    }
-]
-
-@app.get("/", tags=["root"])
-async def read_root() -> dict:
-    return {"message": "Welcome to your todo list."}
-
-@app.get("/todo", tags=["todos"])
-async def get_todos() -> dict:
-    return { "data": todos }
+@app.get("/api/health")
+async def read_root():
+    return {"message": "API is up and running!"}
