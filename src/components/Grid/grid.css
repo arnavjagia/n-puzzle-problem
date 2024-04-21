@@ -1,7 +1,39 @@
-wrapper {
+grid-wrap {
+  margin: auto;
+}
+
+.grid-container {
   display: flex;
-  flex-direction: row;
-  gap: 1em;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  /* Ensure the grid container takes up the full viewport height */
+  /* height: 100vh; */
+}
+
+.grid {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 80%; /* Limit the grid width for better responsiveness */
+}
+
+.grid-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px; /* Adjust the width of each grid cell */
+  height: 60px; /* Adjust the height of each grid cell */
+  border: 1px solid #ccc;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.empty-cell {
+  background-color: #fff; /* White background for the empty cell */
+  cursor: initial;
 }
