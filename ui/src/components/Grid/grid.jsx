@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import "./grid.css";
 
 function Grid() {
@@ -75,6 +76,23 @@ function Grid() {
   // Check if oldGridCells and gridCells have the same values
   const areArraysEqual = JSON.stringify(oldGridCells) === JSON.stringify(gridCells);
 
+  // Function to return grid state as a string
+  const displayGridState = (cells) => {
+    return cells.join("\t");
+  };
+
+  // Function to send grid state to the server
+  const sendGridState = async () => {
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/grid", {'GridConfiguration': gridCells });
+      const { newGridCells } = response.data;
+      setGridCells(oldGridCells);
+      // setHeuristics(heuristics);
+    } catch (error) {
+      console.error("Error sending grid state:", error);
+    }
+  };
+
   return (
     <grid-wrap>
       <div className="grid-container">
@@ -95,14 +113,22 @@ function Grid() {
         {/* Render the grid based on the gridSize */}
         <div
           className="grid"
-          style={{ gridTemplateColumns: gridTemplateColumns, maxHeight: "100%", maxWidth: "100%" }}
+          style={{
+            gridTemplateColumns: gridTemplateColumns,
+            maxHeight: "100%",
+            maxWidth: "100%",
+          }}
         >
           {renderGrid()}
         </div>
-        <p>Parent: {oldGridCells}</p>
-        <p>New: {gridCells}</p>
-        <p>Are oldGridCells and gridCells the same? {areArraysEqual ? "Yes" : "No"}</p>
+        <p>Parent: {displayGridState(oldGridCells)}</p>
+        <p>New: {displayGridState(gridCells)}</p>
+        <p>
+          Are oldGridCells and gridCells the same?{" "}
+          {areArraysEqual ? "Yes" : "No"}
+        </p>
       </div>
+      <button onClick={sendGridState}>Send Grid State</button>
     </grid-wrap>
   );
 }
