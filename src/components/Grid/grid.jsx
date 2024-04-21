@@ -76,32 +76,34 @@ function Grid() {
   const areArraysEqual = JSON.stringify(oldGridCells) === JSON.stringify(gridCells);
 
   return (
-    <div className="grid-container">
-      {/* Slider to control grid size */}
-      <input
-        type="range"
-        min="2"
-        max="4"
-        value={gridSize}
-        onChange={handleSliderChange}
-      />
+    <grid-wrap>
+      <div className="grid-container">
+        {/* Slider to control grid size */}
+        <input
+          type="range"
+          min="2"
+          max="4"
+          value={gridSize}
+          onChange={handleSliderChange}
+        />
 
-      {/* Display the current grid size */}
-      <p>
-        Grid Size: {gridSize}x{gridSize}
-      </p>
+        {/* Display the current grid size */}
+        <p>
+          Grid Size: {gridSize}x{gridSize}
+        </p>
 
-      {/* Render the grid based on the gridSize */}
-      <div
-        className="grid"
-        style={{ gridTemplateColumns: gridTemplateColumns, maxHeight: "100%", maxWidth: "100%" }}
-      >
-        {renderGrid()}
+        {/* Render the grid based on the gridSize */}
+        <div
+          className="grid"
+          style={{ gridTemplateColumns: gridTemplateColumns, maxHeight: "100%", maxWidth: "100%" }}
+        >
+          {renderGrid()}
+        </div>
+        <p>Parent: {oldGridCells}</p>
+        <p>New: {gridCells}</p>
+        <p>Are oldGridCells and gridCells the same? {areArraysEqual ? "Yes" : "No"}</p>
       </div>
-      <p>Parent: {oldGridCells}</p>
-      <p>New: {gridCells}</p>
-      <p>Are oldGridCells and gridCells the same? {areArraysEqual ? "Yes" : "No"}</p>
-    </div>
+    </grid-wrap>
   );
 }
 
