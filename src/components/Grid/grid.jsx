@@ -44,12 +44,15 @@ function Grid() {
 
   // Render the grid based on the gridSize and gridCells
   const renderGrid = () => {
+    const cellSize = `${100 / gridSize}+5%`; // Calculate cell size dynamically
+
     return gridCells.map((cellIndex, index) => (
       <div
         key={cellIndex}
         className={`grid-cell ${
           cellIndex === gridSize * gridSize - 1 ? "empty-cell" : ""
         }`}
+        style={{ width: cellSize, height: cellSize }} // Set dynamic width and height
         onClick={() => handleTileClick(index)}
       >
         {/* Display the tile number (or empty space) */}
@@ -91,7 +94,7 @@ function Grid() {
       {/* Render the grid based on the gridSize */}
       <div
         className="grid"
-        style={{ gridTemplateColumns: gridTemplateColumns }}
+        style={{ gridTemplateColumns: gridTemplateColumns, maxHeight: "100%", maxWidth: "100%" }}
       >
         {renderGrid()}
       </div>

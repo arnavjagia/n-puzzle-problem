@@ -1,25 +1,33 @@
 .grid-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Ensure the grid container takes up the full viewport height */
 }
 
 .grid {
   display: grid;
-  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 80%; /* Limit the grid width for better responsiveness */
 }
 
 .grid-cell {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: lightblue;
+  width: 60px; /* Adjust the width of each grid cell */
+  height: 60px; /* Adjust the height of each grid cell */
   border: 1px solid #ccc;
-  height: 50px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .empty-cell {
   background-color: #fff; /* White background for the empty cell */
-  cursor: pointer; /* Show cursor pointer for clickable empty cell */
+  cursor: initial;
 }
