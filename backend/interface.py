@@ -25,6 +25,8 @@ def generate_states(N: int) -> tuple[list, list]:
     """Returns (initial state, goal state) as Jagia-style flat lists"""
     seed = 50
 
+    N = N**2 - 1
+
     goal = BoardInstance.random(N)
     initial = goal.drunk_walk(seed)
 
