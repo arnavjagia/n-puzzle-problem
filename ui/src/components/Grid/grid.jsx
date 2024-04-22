@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import "./grid.css";
 
+axios.defaults.baseURL = "http://127.0.0.1:8000";
+
 function Grid() {
   const [gridSize, setGridSize] = useState(3); // Initial grid size, e.g., 3x3 grid
   const [gridCells, setGridCells] = useState(generateGridCells(gridSize));
@@ -84,7 +86,7 @@ function Grid() {
   // Function to send grid state to the server
   const sendGridState = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/grid", {'GridConfiguration': gridCells });
+      const response = await axios.post("/api/grid", {'GridConfiguration': gridCells });
       const { newGridCells } = response.data;
       setGridCells(oldGridCells);
       // setHeuristics(heuristics);
