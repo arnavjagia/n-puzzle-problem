@@ -1,8 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 import "./grid.css";
 
 axios.defaults.baseURL = "http://127.0.0.1:8000";
+
 
 function Grid({ gridsize, updateGridSize }) {
   const [gridCells, setGridCells] = useState(generateGridCells(gridsize));
@@ -133,6 +135,11 @@ function Grid({ gridsize, updateGridSize }) {
       <button onClick={sendGridState}>Send Grid State</button>
     </grid-wrap>
   );
+}
+
+Grid.propTypes = {
+  gridsize: PropTypes.number.isRequired,
+  updateGridSize: PropTypes.func.isRequired,
 }
 
 export default Grid;
