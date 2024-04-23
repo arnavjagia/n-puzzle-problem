@@ -7,6 +7,7 @@ function Landing() {
   const [gridSize, setGridSize] = useState(3); // Initial grid size, e.g., 3x3 grid
   const [initialGridCells, setInitialGridCells] = useState([]);
   const [goalGridCells, setGoalGridCells] = useState([]);
+  const [heuristic, setHeuristic] = useState(0); // Heuristic function to use [manhattan, misplaced, custom
 
   // Goal test
   const areArraysEqual = JSON.stringify(initialGridCells) === JSON.stringify(goalGridCells);
@@ -33,8 +34,10 @@ function Landing() {
       });
       console.log("Response:", response.data);
       const { nextGridCells } = await response.data;
+      const { heuristic } = await response.data;
       // console.log("Next grid state:", nextGridCells);
       setInitialGridCells(nextGridCells);
+      setHeuristic(heuristic);
     } catch (error) {
       console.error("Error getting next grid state:", error);
     }
@@ -83,7 +86,9 @@ function Landing() {
         />
       </landing-wrapper>
       <button onClick={nextGridState}>Next Grid State</button>
+      <p>Heuristic: {heuristic}</p>
       <p>Goal state reached? {areArraysEqual ? "Yes" : "No"}</p>
+
     </super-landing-wrapper>
   );
 }

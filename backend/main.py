@@ -36,8 +36,8 @@ async def get_next_state(request: Request):
         data = await request.json()
         current = data["initialGrid"]
         goal = data["goalGrid"]
-        new_state = next_state(current, goal)
-        return {"nextGridCells": new_state}
+        new_state, heuristic = next_state(current, goal)
+        return {"nextGridCells": new_state, "heuristic": heuristic}
     except Exception as e:
         raise HTTPException(status_code=400, detail="Invalid grid state data")
 
