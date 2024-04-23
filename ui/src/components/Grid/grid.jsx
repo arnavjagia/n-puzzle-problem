@@ -1,4 +1,3 @@
-import { useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import "./grid.css";
@@ -7,19 +6,9 @@ axios.defaults.baseURL = "http://127.0.0.1:8000";
 
 
 function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
-
-  // Function to generate initial grid cells
-  function generateGridCells(size) {
-    const cells = [];
-    for (let i = 0; i < size * size; i++) {
-      cells.push(i);
-    }
-    return cells;
-  }
-
   // Function to handle tile click
   const handleTileClick = (clickedIndex) => {
-    const emptyIndex = gridCells.indexOf(gridsize * gridsize - 1); // Find index of the empty cell
+    const emptyIndex = gridCells.indexOf(gridsize * gridsize); // Find index of the empty cell
     if (isAdjacent(clickedIndex, emptyIndex)) {
       // Swap the clicked tile with the empty tile
       const newGridCells = [...gridCells];
@@ -51,22 +40,15 @@ function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
       <div
         key={cellIndex}
         className={`grid-cell ${
-          cellIndex === gridsize * gridsize - 1 ? "empty-cell" : ""
+          cellIndex === gridsize * gridsize ? "empty-cell" : ""
         }`}
         style={{ width: cellSize, height: cellSize }} // Set dynamic width and height
         onClick={() => handleTileClick(index)}
       >
         {/* Display the tile number (or empty space) */}
-        {cellIndex !== gridsize * gridsize - 1 ? cellIndex + 1 : ""}
+        {cellIndex !== gridsize * gridsize ? cellIndex : ""}
       </div>
     ));
-  };
-
-  // Function to handle slider change and update grid size
-  const handleSliderChange = (event) => {
-    const newSize = parseInt(event.target.value, 10);
-    updateGridSize(newSize);
-    updateGridCells(generateGridCells(newSize));
   };
 
   // Calculate grid template columns dynamically based on gridSize
@@ -94,15 +76,6 @@ function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
     <grid-wrap>
       <p>gird size: {gridsize}</p>
       <div className="grid-container">
-        {/* Slider to control grid size */}
-        <input
-          type="range"
-          min="2"
-          max="4"
-          value={gridsize}
-          onChange={handleSliderChange}
-        />
-
         {/* Display the current grid size */}
         <p>
           Grid Size: {gridsize}x{gridsize}
