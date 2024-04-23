@@ -1,4 +1,3 @@
-from random import shuffle
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import json
@@ -22,12 +21,6 @@ app.add_middleware(
 @app.get("/api/health")
 async def read_root() -> dict:
     return {"message": "API is up and running!"}
-
-@app.get("/api/grid/{size}")
-async def get_initial_grid(size: int) -> dict:
-    a = [i for i in range(size*size)]
-    shuffle(a)
-    return {"initialGrid": a}
 
 @app.post("/api/grid")
 async def update_grid(request: Request):
