@@ -2,9 +2,15 @@ super-landing-wrapper {
   display: grid;
 }
 
-super-landing-wrapper > input, super-landing-wrapper > button {
+super-landing-wrapper > h1 {
+  margin-top: 0;
+  font-size: xx-large;
+}
+
+super-landing-wrapper input, super-landing-wrapper button {
   width: max-content;
   justify-self: center;
+  align-self: center;
 }
 
 landing-wrapper {
