@@ -6,7 +6,9 @@ import "./grid.css";
 axios.defaults.baseURL = "http://127.0.0.1:8000";
 
 
-function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
+function Grid({ gridsize, updateGridSize }) {
+  const [gridCells, setGridCells] = useState(generateGridCells(gridsize));
+  const [oldGridCells, setOldGridCells] = useState(generateGridCells(gridsize));
 
   // Function to generate initial grid cells
   function generateGridCells(size) {
@@ -27,7 +29,8 @@ function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
         newGridCells[clickedIndex],
         newGridCells[emptyIndex],
       ];
-      updateGridCells(newGridCells);
+      setOldGridCells(gridCells);
+      setGridCells(newGridCells);
     }
   };
 
@@ -66,11 +69,15 @@ function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
   const handleSliderChange = (event) => {
     const newSize = parseInt(event.target.value, 10);
     updateGridSize(newSize);
-    updateGridCells(generateGridCells(newSize));
+    setGridCells(generateGridCells(newSize));
+    setOldGridCells(generateGridCells(newSize));
   };
 
   // Calculate grid template columns dynamically based on gridSize
-  const gridTemplateColumns = `repeat(${gridsize}, 1fr)`; // E.g., "repeat(3, 1fr)"
+  const gridTemplateColumns = `repeat(${gridsize}, 1fr)`;
+
+  // Check if oldGridCells and gridCells have the same values
+  const areArraysEqual = JSON.stringify(oldGridCells) === JSON.stringify(gridCells);
 
   // Function to return grid state as a string
   const displayGridState = (cells) => {
@@ -82,9 +89,8 @@ function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
     try {
       const response = await axios.post("/api/grid", {'GridConfiguration': gridCells });
       const { newGridCells } = response.data;
-      console.log("New grid state:", newGridCells);
-      console.log(typeof newGridCells);
-      updateGridCells(newGridCells);
+      setGridCells(oldGridCells);
+      // setHeuristics(heuristics);
     } catch (error) {
       console.error("Error sending grid state:", error);
     }
@@ -119,7 +125,12 @@ function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
         >
           {renderGrid()}
         </div>
+        <p>Parent: {displayGridState(oldGridCells)}</p>
         <p>New: {displayGridState(gridCells)}</p>
+        <p>
+          Are oldGridCells and gridCells the same?{" "}
+          {areArraysEqual ? "Yes" : "No"}
+        </p>
       </div>
       <button onClick={sendGridState}>Send Grid State</button>
     </grid-wrap>
@@ -129,8 +140,6 @@ function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
 Grid.propTypes = {
   gridsize: PropTypes.number.isRequired,
   updateGridSize: PropTypes.func.isRequired,
-  gridCells: PropTypes.array.isRequired,
-  updateGridCells: PropTypes.func.isRequired,
 }
 
 export default Grid;
