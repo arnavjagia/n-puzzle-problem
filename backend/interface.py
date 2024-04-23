@@ -36,6 +36,12 @@ def generate_states(N: int) -> tuple[list, list]:
     return (initial_list, goal_list)
 
 
+def heuristic(current_list: list[int], goal_list: list[int]) -> int:
+    current = BoardInstance(to_nested_list(current_list))
+    goal = BoardInstance(to_nested_list(goal_list))
+    return current.manhattan_distance(goal)
+
+
 def next_state(current: list[int], goal: list[int]) -> tuple[list[int], int]: 
     """Returns the next state in the optimal path current -> next -> ... -> goal.
     Inputs are Jagia-style flat lists.
@@ -64,3 +70,4 @@ if __name__ == "__main__":
         print(b)
 
     print(next_state(initial_list, goal_list))
+    print(heuristic(initial_list, goal_list))
