@@ -2,7 +2,7 @@ super-landing-wrapper {
   display: grid;
 }
 
-super-landing-wrapper > input, super-landing-wrapper > button {
+super-landing-wrapper > input {
   width: max-content;
   justify-self: center;
 }

@@ -3,7 +3,7 @@ from random import shuffle
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from interface import generate_states, next_state
+from interface import generate_states
 
 app = FastAPI()
 
@@ -29,17 +29,6 @@ async def read_root() -> dict:
 async def get_initial_grid(size: int) -> dict:
     initial, goal = generate_states(size)
     return {"initialGrid": initial, "goalGrid": goal}
-
-@app.post("/api/solve")
-async def get_next_state(request: Request):
-    try:
-        data = await request.json()
-        current = data["initialGrid"]
-        goal = data["goalGrid"]
-        new_state = next_state(current, goal)
-        return {"nextGridCells": new_state}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail="Invalid grid state data")
 
 @app.post("/api/grid")
 async def update_grid(request: Request):

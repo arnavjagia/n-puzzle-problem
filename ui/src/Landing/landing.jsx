@@ -22,21 +22,6 @@ function Landing() {
     }
   };
 
-  const nextGridState = async () => {
-    try {
-      const response = await axios.post("/api/solve", {
-        initialGrid: initialGridCells,
-        goalGrid: goalGridCells,
-      });
-      console.log("Response:", response.data);
-      const { nextGridCells } = await response.data;
-      // console.log("Next grid state:", nextGridCells);
-      setInitialGridCells(nextGridCells);
-    } catch (error) {
-      console.error("Error getting next grid state:", error);
-    }
-  }
-
   useEffect(() => {
     initGridState();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,7 +59,6 @@ function Landing() {
           updateGridCells={setGoalGridCells}
         />
       </landing-wrapper>
-      <button onClick={nextGridState}>Next Grid State</button>
     </super-landing-wrapper>
   );
 }
