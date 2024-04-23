@@ -36,7 +36,7 @@ def generate_states(N: int) -> tuple[list, list]:
     return (initial_list, goal_list)
 
 
-def next_state(current: list[int], goal: list[int]):
+def next_state(current: list[int], goal: list[int]) -> tuple[list[int], int]: 
     """Returns the next state in the optimal path current -> next -> ... -> goal.
     Inputs are Jagia-style flat lists.
     """
@@ -48,7 +48,7 @@ def next_state(current: list[int], goal: list[int]):
     except:
         next = goal # if there's no next, you're at the goal state
 
-    return to_flat_list(next.matrix)
+    return (to_flat_list(next.matrix), current.manhattan_distance(goal))
 
 
 
