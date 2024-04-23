@@ -54,7 +54,7 @@ def next_state(current: list[int], goal: list[int]) -> tuple[list[int], int]:
     except:
         next = goal # if there's no next, you're at the goal state
 
-    return (to_flat_list(next.matrix), current.manhattan_distance(goal))
+    return (to_flat_list(next.matrix), next.manhattan_distance(goal))
 
 
 
