@@ -39,6 +39,9 @@ if __name__ == "__main__":
                 print(state)
             print(f"{len(path)} steps")
 
+            heuristic_list = [state.manhattan_distance(goal) for state in path]
+            print(heuristic_list)
+
         input("\nPress Enter to continue... ")
         
         os.system("clear")

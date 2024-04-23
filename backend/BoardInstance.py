@@ -96,6 +96,8 @@ class BoardInstance:
         result = 0
         for i in range(len(self.matrix)):
             for j in range(len(self.matrix[0])):
+                if self.matrix[i][j] is None:
+                    continue
                 (i1, j1) = value_to_index[self.matrix[i][j]]
                 result += abs(i - i1) + abs(j - j1)
         return result

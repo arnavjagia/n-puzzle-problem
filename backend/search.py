@@ -1,6 +1,6 @@
 from BoardInstance import BoardInstance
 
-from heapq import heappush, heappop
+from heapq import heappush, heappop, heapify
 from collections import defaultdict
 
 def backtrack(end: BoardInstance, prev: dict) -> list:
@@ -36,16 +36,18 @@ def a_star(start: BoardInstance, goal: BoardInstance) -> list[BoardInstance]:
         if current == goal:
             return backtrack(current, prev)
 
-        for neighbor in current.neighbors():
-            if neighbor in closed:
-                continue
-            closed.add(neighbor)
+        if current in closed:
+            continue
+        closed.add(current)
 
+        for neighbor in current.neighbors():
             alt_dist = dist[current] + 1 
-            if alt_dist < dist[neighbor]:
+            if alt_dist <= dist[neighbor]:
                 dist[neighbor] = alt_dist
                 prev[neighbor] = current
                 priority = alt_dist + neighbor.manhattan_distance(goal)
-                heappush(frontier, (priority, neighbor)) 
+                heappush(frontier, (priority, neighbor))
+                heapify(frontier)
+                
 
     return None
