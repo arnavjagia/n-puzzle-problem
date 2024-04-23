@@ -47,7 +47,5 @@ def a_star(start: BoardInstance, goal: BoardInstance) -> list[BoardInstance]:
                 prev[neighbor] = current
                 priority = alt_dist + neighbor.manhattan_distance(goal)
                 heappush(frontier, (priority, neighbor))
-                heapify(frontier)
-                
 
     return None

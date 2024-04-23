@@ -23,7 +23,7 @@ def to_nested_list(flat_list: list[int]) -> list[list[int]]:
 
 def generate_states(N: int) -> tuple[list, list]:
     """Returns (initial state, goal state) as Jagia-style flat lists"""
-    seed = 50
+    seed = 125
 
     N = N**2 - 1
 
