@@ -5,6 +5,7 @@ import "./grid.css";
 axios.defaults.baseURL = "http://127.0.0.1:8000";
 
 
+// eslint-disable-next-line no-unused-vars
 function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
   // Function to handle tile click
   const handleTileClick = (clickedIndex) => {
@@ -74,13 +75,7 @@ function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
 
   return (
     <grid-wrap>
-      <p>gird size: {gridsize}</p>
       <div className="grid-container">
-        {/* Display the current grid size */}
-        <p>
-          Grid Size: {gridsize}x{gridsize}
-        </p>
-
         {/* Render the grid based on the gridSize */}
         <div
           className="grid"
@@ -92,7 +87,7 @@ function Grid({ gridsize, updateGridSize, gridCells, updateGridCells }) {
         >
           {renderGrid()}
         </div>
-        <p>New: {displayGridState(gridCells)}</p>
+        <p>Board State: {displayGridState(gridCells)}</p>
       </div>
       <button onClick={sendGridState}>Send Grid State</button>
     </grid-wrap>
