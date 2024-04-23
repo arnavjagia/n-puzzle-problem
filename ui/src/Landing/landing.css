@@ -1,12 +1,3 @@
-super-landing-wrapper {
-  display: grid;
-}
-
-super-landing-wrapper > input {
-  width: max-content;
-  justify-self: center;
-}
-
 landing-wrapper {
   display: flex;
   flex-direction: row;
