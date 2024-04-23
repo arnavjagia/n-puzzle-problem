@@ -8,9 +8,6 @@ function Landing() {
   const [initialGridCells, setInitialGridCells] = useState([]);
   const [goalGridCells, setGoalGridCells] = useState([]);
 
-  // Goal test
-  const areArraysEqual = JSON.stringify(initialGridCells) === JSON.stringify(goalGridCells);
-
   const initGridState = async () => {
     try {
       const response = await axios.get(`/generate/${gridSize}`);
@@ -55,7 +52,6 @@ function Landing() {
 
   return (
     <super-landing-wrapper>
-      <h1>N puzzle problem solver</h1>
       <input
         type="range"
         min="2"
@@ -63,10 +59,6 @@ function Landing() {
         value={gridSize}
         onChange={handleSliderChange}
       />
-      {/* Display the current grid size */}
-      <p>
-        Grid Size: {gridSize}x{gridSize}
-      </p>
       <landing-wrapper>
         {/* Slider to control grid size */}
         <Grid
@@ -83,7 +75,6 @@ function Landing() {
         />
       </landing-wrapper>
       <button onClick={nextGridState}>Next Grid State</button>
-      <p>Goal state reached? {areArraysEqual ? "Yes" : "No"}</p>
     </super-landing-wrapper>
   );
 }
