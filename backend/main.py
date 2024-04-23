@@ -1,9 +1,7 @@
-import json
 from random import shuffle
-
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from interface import generate_states
+import json
 
 app = FastAPI()
 
@@ -25,10 +23,11 @@ app.add_middleware(
 async def read_root() -> dict:
     return {"message": "API is up and running!"}
 
-@app.get("/generate/{size}")
+@app.get("/api/grid/{size}")
 async def get_initial_grid(size: int) -> dict:
-    initial, goal = generate_states(size)
-    return {"initialGrid": initial, "goalGrid": goal}
+    a = [i for i in range(size*size)]
+    shuffle(a)
+    return {"initialGrid": a}
 
 @app.post("/api/grid")
 async def update_grid(request: Request):
