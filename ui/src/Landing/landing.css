@@ -11,6 +11,7 @@ super-landing-wrapper input, super-landing-wrapper button {
   width: max-content;
   justify-self: center;
   align-self: center;
+  margin: 0.1em;
 }
 
 landing-wrapper {

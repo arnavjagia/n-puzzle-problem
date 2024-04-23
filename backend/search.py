@@ -36,11 +36,10 @@ def a_star(start: BoardInstance, goal: BoardInstance) -> list[BoardInstance]:
         if current == goal:
             return backtrack(current, prev)
 
-        closed.add(current)
-
         for neighbor in current.neighbors():
             if neighbor in closed:
                 continue
+            closed.add(neighbor)
 
             alt_dist = dist[current] + 1 
             if alt_dist < dist[neighbor]:

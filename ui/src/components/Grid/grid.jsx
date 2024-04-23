@@ -2,7 +2,8 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import "./grid.css";
 
-axios.defaults.baseURL = "http://127.0.0.1:8000";
+// axios.defaults.baseURL = "https://f9jw97h7-8000.inc1.devtunnels.ms";
+axios.defaults.baseURL = "http://localhost:8000";
 
 
 // eslint-disable-next-line no-unused-vars

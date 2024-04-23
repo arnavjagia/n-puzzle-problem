@@ -3,15 +3,34 @@ import Grid from "../components/Grid/grid";
 import "./landing.css";
 import axios from "axios";
 
+// axios.defaults.baseURL = "https://f9jw97h7-8000.inc1.devtunnels.ms";
+axios.defaults.baseURL = "http://localhost:8000";
+
 function Landing() {
   const [gridSize, setGridSize] = useState(3); // Initial grid size, e.g., 3x3 grid
   const [initialGridCells, setInitialGridCells] = useState([]);
   const [goalGridCells, setGoalGridCells] = useState([]);
   const [heuristic, setHeuristic] = useState(0); // Heuristic function to use [manhattan, misplaced, custom
+  const [flag, setFlag] = useState(false);
 
   // Goal test
   const areArraysEqual = JSON.stringify(initialGridCells) === JSON.stringify(goalGridCells);
 
+  const getHeuristic = async () => {
+    try {
+      const response = await axios.post("/api/heuristic", {
+        initialGrid: initialGridCells,
+        goalGrid: goalGridCells,
+      });
+      console.log("Response:", response.data);
+      const { heuristic } = await response.data;
+      setHeuristic(heuristic);
+    } catch (error) {
+      console.error("Error getting heuristic:", error);
+    }
+  }
+
+  // Function to initialize grid state
   const initGridState = async () => {
     try {
       const response = await axios.get(`/generate/${gridSize}`);
@@ -38,6 +57,7 @@ function Landing() {
       // console.log("Next grid state:", nextGridCells);
       setInitialGridCells(nextGridCells);
       setHeuristic(heuristic);
+      setFlag(false);
     } catch (error) {
       console.error("Error getting next grid state:", error);
     }
@@ -47,7 +67,15 @@ function Landing() {
     initGridState();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gridSize]);
-
+  
+  useEffect(() => {
+    if (flag) {
+      getHeuristic();
+    }
+    setFlag(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialGridCells])
+  
   // Function to handle slider change and update grid size
   const handleSliderChange = (event) => {
     const newSize = parseInt(event.target.value, 10);

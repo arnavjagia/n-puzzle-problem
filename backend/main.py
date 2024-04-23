@@ -3,14 +3,15 @@ from random import shuffle
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from interface import generate_states, next_state
+from interface import generate_states, heuristic, next_state
 
 app = FastAPI()
 
 origins = [
     "https://localhost:5173",
     "http://localhost:5173",
-    "localhost:5173"
+    "localhost:5173",
+    "https://f9jw97h7-5173.inc1.devtunnels.ms"
 ]
 
 app.add_middleware(
@@ -40,6 +41,17 @@ async def get_next_state(request: Request):
         return {"nextGridCells": new_state, "heuristic": heuristic}
     except Exception as e:
         raise HTTPException(status_code=400, detail="Invalid grid state data")
+
+@app.post("/api/heuristic")
+async def get_heuristic(request: Request):
+    try:
+        data = await request.json()
+        current = data["initialGrid"]
+        goal = data["goalGrid"]
+        res = heuristic(current, goal)
+        return {"heuristic": res}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail="Invalid heuristic")
 
 @app.post("/api/grid")
 async def update_grid(request: Request):
